@@ -5,6 +5,7 @@ import {
   ArrowRight,
   CheckCircle2,
   ChevronRight,
+  Settings,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
@@ -124,6 +125,14 @@ export default function LandingPage() {
               >
                 ดูฐานข้อมูลอาหาร
                 <ChevronRight className="h-4 w-4" />
+              </Link>
+              <Link
+                id="hero-cta-manage"
+                href="/manage"
+                className="inline-flex items-center justify-center gap-1 rounded-lg border border-border bg-background px-8 py-3 text-base font-medium hover:bg-accent transition-colors"
+              >
+                จัดการระบบ
+                <Settings className="h-4 w-4" />
               </Link>
             </div>
 

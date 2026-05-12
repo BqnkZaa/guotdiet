@@ -14,7 +14,11 @@ const globalForPrisma = globalThis as unknown as {
 const connectionString = process.env.DATABASE_URL
 
 // Use an adapter for Prisma 7 client execution
-const pool = new Pool({ connectionString })
+const isLocalhost = connectionString?.includes('localhost')
+const pool = new Pool({ 
+  connectionString,
+  ssl: !isLocalhost ? { rejectUnauthorized: false } : undefined
+})
 const adapter = new PrismaPg(pool)
 
 export const prisma =
