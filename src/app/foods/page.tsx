@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Salad } from 'lucide-react'
+import { Salad, ServerCrash } from 'lucide-react'
 import { ingredientService } from '@/services/ingredient.service'
 import { Badge } from '@/components/ui/badge'
 import { FoodCategory, PurineLevel, Food } from '@prisma/client'
@@ -32,8 +31,6 @@ const levelColors: Record<PurineLevel, string> = {
   LOW: 'bg-green-100 text-green-700 border-green-200',
 }
 
-// Since this is a simple page, we do a server component fetch
-// For search capability in MVP without JS state, we can just list them or use Next.js searchParams
 export default async function FoodsPage({
   searchParams,
 }: {
@@ -43,11 +40,23 @@ export default async function FoodsPage({
   const q = sp.q || ''
   const page = Number(sp.page) || 1
 
-  const { items, totalCount } = await ingredientService.getIngredients({
-    search: q,
-    page,
-    limit: 100, // Show top 100 in MVP
-  })
+  // Gracefully handle DB connection errors instead of crashing the page
+  let items: Food[] = []
+  let totalCount = 0
+  let dbError = false
+
+  try {
+    const result = await ingredientService.getIngredients({
+      search: q,
+      page,
+      limit: 100,
+    })
+    items = result.items
+    totalCount = result.totalCount
+  } catch (err) {
+    console.error('[FoodsPage] Failed to fetch ingredients:', err)
+    dbError = true
+  }
 
   return (
     <div className="space-y-6 pb-12">
@@ -59,55 +68,78 @@ export default async function FoodsPage({
           </div>
           <div>
             <h1 className="text-xl font-bold text-foreground">ฐานข้อมูลอาหาร</h1>
-            <p className="text-sm text-muted-foreground">รายการวัตถุดิบ {totalCount} รายการ</p>
+            <p className="text-sm text-muted-foreground">
+              {dbError ? 'ไม่สามารถโหลดข้อมูลได้' : `รายการวัตถุดิบ ${totalCount} รายการ`}
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Simple Search Form */}
-      <form className="flex gap-2 max-w-md mb-6">
-        <input 
-          type="text" 
-          name="q" 
-          defaultValue={q}
-          placeholder="ค้นหาวัตถุดิบ..." 
-          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-        />
-        <button 
-          type="submit" 
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-        >
-          ค้นหา
-        </button>
-      </form>
+      {/* DB Error State */}
+      {dbError ? (
+        <div className="flex flex-col items-center justify-center py-20 text-center gap-4">
+          <ServerCrash className="h-12 w-12 text-muted-foreground/50" />
+          <div>
+            <p className="font-semibold text-foreground">ไม่สามารถเชื่อมต่อฐานข้อมูลได้</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              กรุณาลองใหม่อีกครั้ง หรือติดต่อผู้ดูแลระบบ
+            </p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Simple Search Form */}
+          <form className="flex gap-2 max-w-md mb-6">
+            <input
+              type="text"
+              name="q"
+              defaultValue={q}
+              placeholder="ค้นหาวัตถุดิบ..."
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+            >
+              ค้นหา
+            </button>
+          </form>
 
-      {/* Results Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((food: Food) => (
-          <div key={food.id} className="rounded-xl border bg-card text-card-foreground shadow-sm p-4 hover:border-primary/40 transition-colors">
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <h3 className="font-semibold text-lg">{food.nameTh}</h3>
-                <p className="text-xs text-muted-foreground">{food.nameEn}</p>
+          {/* Results Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {items.map((food: Food) => (
+              <div
+                key={food.id}
+                className="rounded-xl border bg-card text-card-foreground shadow-sm p-4 hover:border-primary/40 transition-colors"
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="font-semibold text-lg">{food.nameTh}</h3>
+                    <p className="text-xs text-muted-foreground">{food.nameEn}</p>
+                  </div>
+                  <Badge
+                    variant="outline"
+                    className={`text-xs px-2 py-0.5 border ${levelColors[food.purineLevel as PurineLevel]}`}
+                  >
+                    {food.purineLevel}
+                  </Badge>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-border/50 flex justify-between items-center text-sm">
+                  <span className="text-muted-foreground">{categoryMap[food.category]}</span>
+                  <span className="font-medium text-foreground">{food.purinePerHg} mg / 100g</span>
+                </div>
               </div>
-              <Badge variant="outline" className={`text-xs px-2 py-0.5 border ${levelColors[food.purineLevel as PurineLevel]}`}>
-                {food.purineLevel}
-              </Badge>
-            </div>
-            
-            <div className="mt-4 pt-3 border-t border-border/50 flex justify-between items-center text-sm">
-              <span className="text-muted-foreground">{categoryMap[food.category]}</span>
-              <span className="font-medium text-foreground">{food.purinePerHg} mg / 100g</span>
-            </div>
-          </div>
-        ))}
+            ))}
 
-        {items.length === 0 && (
-          <div className="col-span-full py-12 text-center text-muted-foreground">
-            ไม่พบรายการอาหารที่ค้นหา
+            {items.length === 0 && (
+              <div className="col-span-full py-12 text-center text-muted-foreground">
+                ไม่พบรายการอาหารที่ค้นหา
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   )
 }
