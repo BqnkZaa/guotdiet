@@ -1,6 +1,5 @@
-import { PrismaClient, PurineLevel, FoodCategory } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { PurineLevel, FoodCategory } from '@prisma/client'
+import { prisma } from '../src/lib/prisma'
 
 type SeedFood = {
   nameTh: string

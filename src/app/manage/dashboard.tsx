@@ -53,7 +53,7 @@ export function AdminDashboard({ foods }: Props) {
         </div>
         <div className="flex items-center gap-2">
           <Button asChild className="gradient-brand text-white border-0">
-            <Link href="/foods/add">
+            <Link href="/manage/add">
               <Plus className="w-4 h-4 mr-2" />
               เพิ่มวัตถุดิบ
             </Link>

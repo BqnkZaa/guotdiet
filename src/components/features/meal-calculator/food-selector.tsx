@@ -119,7 +119,7 @@ export function FoodSelector({ onSelect }: FoodSelectorProps) {
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder="ค้นหาวัตถุดิบ (เช่น ไก่, ตับ, ผักกาด)..."
-          className="pl-10 pr-8 h-12 text-base md:text-sm" // h-12 for larger touch area, text-base prevents iOS zoom
+          className="pl-10 pr-8 h-14 text-base bg-accent/20 border-accent/40 focus-visible:bg-transparent focus-visible:ring-1 focus-visible:ring-primary/40 focus-visible:border-primary/40 rounded-xl transition-all shadow-none"
         />
         {query && (
           <button

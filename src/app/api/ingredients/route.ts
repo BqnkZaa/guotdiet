@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams
     const query = {
       search: searchParams.get('q') || undefined,
-      category: searchParams.get('category') as FoodCategory | undefined,
+      category: (searchParams.get('category') || undefined) as FoodCategory | undefined,
       page: searchParams.get('page') || undefined,
       limit: searchParams.get('limit') || undefined,
     }

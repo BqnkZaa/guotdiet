@@ -9,15 +9,17 @@ export const metadata: Metadata = {
 
 export default function CalculatorPage() {
   return (
-    <div className="space-y-6 pb-12">
+    <div className="container mx-auto px-4 pt-8 pb-12 space-y-8">
       {/* Page header */}
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-          <Calculator className="h-4.5 w-4.5 text-primary" />
-        </div>
-        <div>
-          <h1 className="text-xl font-bold text-foreground">คำนวณพิวรีน</h1>
-          <p className="text-sm text-muted-foreground">ลองคำนวณพิวรีนก่อนรับประทานจริง</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b pb-6 border-border/40">
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 shadow-inner border border-primary/20">
+            <Calculator className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">Gout Diet Analysis Tool</h1>
+            <p className="text-sm text-muted-foreground mt-1">เครื่องมือคำนวณและวิเคราะห์ปริมาณพิวรีนในมื้ออาหารทางคลินิก</p>
+          </div>
         </div>
       </div>
 

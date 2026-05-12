@@ -4,6 +4,7 @@ import { AlertCircle, CheckCircle2, Info, AlertTriangle } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { RecommendationCard } from '@/services/purine.service'
 
 interface CalculationResultsProps {
@@ -42,62 +43,78 @@ export function CalculationResults({ totalPurineMg, recommendations }: Calculati
   const percentage = Math.min((totalPurineMg / 400) * 100, 100)
   
   let progressColor = 'bg-green-500'
-  if (totalPurineMg > 300) progressColor = 'bg-red-500'
-  else if (totalPurineMg > 150) progressColor = 'bg-orange-500'
+  let statusText = 'SAFE / Normal Level'
+  if (totalPurineMg > 300) {
+    progressColor = 'bg-red-500'
+    statusText = 'HIGH RISK / Exceeds Limit'
+  } else if (totalPurineMg > 150) {
+    progressColor = 'bg-orange-500'
+    statusText = 'WARNING / Elevated Level'
+  }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Primary Result Card */}
-      <Card className="border-border/60 shadow-md">
-        <CardHeader className="pb-3 text-center">
-          <CardTitle className="text-sm text-muted-foreground uppercase tracking-wider font-medium">
-            พิวรีนรวมในมื้อนี้
-          </CardTitle>
-          <div className="flex items-baseline justify-center gap-1 mt-2">
-            <span className="text-5xl font-bold tracking-tight text-foreground">
-              {totalPurineMg.toFixed(1)}
-            </span>
-            <span className="text-muted-foreground font-medium">mg</span>
+      <Card className="border-border/60 shadow-sm overflow-hidden rounded-2xl">
+        <div className="bg-muted/20 border-b px-8 py-5">
+          <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Clinical Analysis</h3>
+        </div>
+        <CardContent className="p-8">
+          <div className="flex flex-col items-center justify-center mb-8">
+            <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-2">Total Purine Load</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-6xl font-bold tracking-tighter text-foreground">
+                {totalPurineMg.toFixed(1)}
+              </span>
+              <span className="text-xl text-muted-foreground font-medium ml-1">mg</span>
+            </div>
+            <Badge variant="outline" className={`mt-3 ${totalPurineMg > 300 ? 'text-red-500 border-red-200 bg-red-50' : totalPurineMg > 150 ? 'text-orange-500 border-orange-200 bg-orange-50' : 'text-green-600 border-green-200 bg-green-50'}`}>
+              {statusText}
+            </Badge>
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
+
+          <div className="space-y-3">
+            <div className="flex justify-between text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              <span>0 mg</span>
+              <span>Daily Max (400mg)</span>
+            </div>
             <Progress 
               value={percentage} 
-              className="h-3" 
-              indicatorClassName={progressColor} 
+              className="h-4 bg-muted/50 overflow-hidden" 
+              indicatorClassName={`${progressColor} transition-all duration-1000 ease-out`} 
             />
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>0 mg</span>
-              <span>Daily Limit (400 mg)</span>
-            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Recommendations */}
       {recommendations.length > 0 && (
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-foreground px-1">ข้อแนะนำทางการแพทย์</h3>
-          <div className="space-y-3">
-            {recommendations.map((rec, i) => (
-              <div 
-                key={i} 
-                className={`flex gap-3 rounded-lg border p-4 shadow-sm transition-all duration-200 hover:shadow-md ${getBgColor(rec.type)}`}
-              >
-                <div className="shrink-0 mt-0.5">
-                  {getIcon(rec.type)}
-                </div>
-                <div>
-                  <h4 className="font-semibold text-sm text-foreground mb-1">{rec.title}</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {rec.message}
-                  </p>
-                </div>
-              </div>
-            ))}
+        <Card className="border-border/60 shadow-sm overflow-hidden rounded-2xl">
+          <div className="bg-muted/20 border-b px-8 py-5">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Medical Recommendations</h3>
           </div>
-        </div>
+          <CardContent className="p-8">
+            <div className="space-y-6">
+              {recommendations.map((rec, i) => (
+                <div 
+                  key={i} 
+                  className={`flex gap-4 rounded-xl border p-5 transition-all duration-300 hover:shadow-md animate-in fade-in slide-in-from-right-4`}
+                  style={{ animationDelay: `${i * 100}ms`, animationFillMode: 'both' }}
+                >
+                  <div className="shrink-0 mt-0.5">
+                    {getIcon(rec.type)}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-base text-foreground mb-1.5 tracking-tight">{rec.title}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {rec.message}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   )
