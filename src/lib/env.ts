@@ -5,6 +5,8 @@ const envSchema = z.object({
   DATABASE_URL: z.string().url('DATABASE_URL must be a valid URL'),
   NEXT_PUBLIC_APP_URL: z.string().url('NEXT_PUBLIC_APP_URL must be a valid URL').optional(),
   AUTH_SECRET: z.string().min(32, 'AUTH_SECRET must be at least 32 characters').optional(),
+  // Optional: required only when AI analysis feature is used
+  OPENAI_API_KEY: z.string().startsWith('sk-', 'OPENAI_API_KEY must start with sk-').optional(),
 })
 
 const parseEnv = () => {

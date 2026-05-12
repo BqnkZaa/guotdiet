@@ -79,7 +79,45 @@ const foods: SeedFood[] = [
   { nameTh: 'ชา', nameEn: 'Tea', aliases: ['ชาเขียว', 'ชาดำ'], category: 'BEVERAGES', purineLevel: 'LOW', purinePerHg: 0, unit: 'g' },
   { nameTh: 'น้ำเปล่า', nameEn: 'Water', aliases: ['น้ำดื่ม'], category: 'BEVERAGES', purineLevel: 'LOW', purinePerHg: 0, unit: 'g' },
   { nameTh: 'วุ้นเส้น', nameEn: 'Glass Noodles', aliases: [], category: 'GRAINS', purineLevel: 'LOW', purinePerHg: 5, unit: 'g' },
-  { nameTh: 'บะหมี่กึ่งสำเร็จรูป', nameEn: 'Instant Noodles', aliases: ['มาม่า', 'ไวไว'], category: 'GRAINS', purineLevel: 'LOW', purinePerHg: 30, unit: 'g' }
+  { nameTh: 'บะหมี่กึ่งสำเร็จรูป', nameEn: 'Instant Noodles', aliases: ['มาม่า', 'ไวไว'], category: 'GRAINS', purineLevel: 'LOW', purinePerHg: 30, unit: 'g' },
+
+  // --- FROM PRANANGKLAO HOSPITAL APP MANUAL AM-121 ---
+  // VERY HIGH PURINE (>300 mg)
+  { nameTh: 'ขนมปังหวานคอกวัว', nameEn: 'Sweetbreads', aliases: ['ตับอ่อน'], category: 'ORGAN_MEAT', purineLevel: 'VERY_HIGH', purinePerHg: 1260, unit: 'g' },
+  { nameTh: 'ยีสต์บริวเวอร์', nameEn: "Brewer's Yeast", aliases: [], category: 'OTHER', purineLevel: 'VERY_HIGH', purinePerHg: 1810, unit: 'g' },
+  { nameTh: 'ยีสต์เบเกอร์', nameEn: "Baker's Yeast", aliases: [], category: 'OTHER', purineLevel: 'VERY_HIGH', purinePerHg: 680, unit: 'g' },
+  { nameTh: 'ปลาทะเลรมควัน', nameEn: 'Smoked Sea Fish', aliases: [], category: 'SEAFOOD', purineLevel: 'VERY_HIGH', purinePerHg: 804, unit: 'g' },
+  { nameTh: 'ม้ามแกะ', nameEn: 'Lamb Spleen', aliases: ['ม้าม'], category: 'ORGAN_MEAT', purineLevel: 'VERY_HIGH', purinePerHg: 773, unit: 'g' },
+  { nameTh: 'ตับวัว', nameEn: 'Beef Liver', aliases: ['ตับ'], category: 'ORGAN_MEAT', purineLevel: 'VERY_HIGH', purinePerHg: 554, unit: 'g' },
+  { nameTh: 'หัวใจหมู', nameEn: 'Pork Heart', aliases: ['หัวใจ'], category: 'ORGAN_MEAT', purineLevel: 'VERY_HIGH', purinePerHg: 530, unit: 'g' },
+  { nameTh: 'ม้ามหมู', nameEn: 'Pork Spleen', aliases: ['ม้าม'], category: 'ORGAN_MEAT', purineLevel: 'VERY_HIGH', purinePerHg: 516, unit: 'g' },
+  { nameTh: 'เห็ดหอมแห้ง', nameEn: 'Dried Mushrooms', aliases: ['เห็ดแห้ง'], category: 'VEGETABLES', purineLevel: 'VERY_HIGH', purinePerHg: 488, unit: 'g' },
+  { nameTh: 'ม้ามวัว', nameEn: 'Beef Spleen', aliases: ['ม้าม'], category: 'ORGAN_MEAT', purineLevel: 'VERY_HIGH', purinePerHg: 444, unit: 'g' },
+  { nameTh: 'ปอดหมู', nameEn: 'Pork Lung', aliases: ['ปอด'], category: 'ORGAN_MEAT', purineLevel: 'VERY_HIGH', purinePerHg: 434, unit: 'g' },
+
+  // HIGH PURINE (150-300 mg)
+  { nameTh: 'ลิ้นวัว', nameEn: 'Beef Tongue', aliases: ['ลิ้น'], category: 'ORGAN_MEAT', purineLevel: 'HIGH', purinePerHg: 160, unit: 'g' },
+  { nameTh: 'หัวใจวัว', nameEn: 'Beef Heart', aliases: ['หัวใจ'], category: 'ORGAN_MEAT', purineLevel: 'HIGH', purinePerHg: 256, unit: 'g' },
+  { nameTh: 'ขาหมู', nameEn: 'Pork Leg', aliases: ['ขาหมู'], category: 'MEAT', purineLevel: 'HIGH', purinePerHg: 160, unit: 'g' },
+  { nameTh: 'ไก่งวง', nameEn: 'Turkey', aliases: [], category: 'POULTRY', purineLevel: 'HIGH', purinePerHg: 150, unit: 'g' },
+  { nameTh: 'เนื้อปลาเทราต์', nameEn: 'Trout', aliases: [], category: 'SEAFOOD', purineLevel: 'HIGH', purinePerHg: 297, unit: 'g' },
+  { nameTh: 'เนื้อปลาทูน่า', nameEn: 'Tuna', aliases: ['ทูน่า'], category: 'SEAFOOD', purineLevel: 'HIGH', purinePerHg: 257, unit: 'g' },
+  { nameTh: 'งาดำ', nameEn: 'Black Sesame', aliases: [], category: 'GRAINS', purineLevel: 'HIGH', purinePerHg: 170, unit: 'g' },
+
+  // MODERATE PURINE (50-150 mg)
+  { nameTh: 'ไข่ปลาคาร์เวียร์', nameEn: 'Caviar', aliases: [], category: 'SEAFOOD', purineLevel: 'MODERATE', purinePerHg: 144, unit: 'g' },
+  { nameTh: 'หอยแมลงภู่', nameEn: 'Mussel', aliases: [], category: 'SEAFOOD', purineLevel: 'MODERATE', purinePerHg: 112, unit: 'g' },
+  { nameTh: 'กุ้งฝอย', nameEn: 'Brown Shrimp', aliases: [], category: 'SEAFOOD', purineLevel: 'MODERATE', purinePerHg: 147, unit: 'g' },
+  { nameTh: 'เนื้อกุ้งมังกร', nameEn: 'Lobster', aliases: ['ล็อบสเตอร์'], category: 'SEAFOOD', purineLevel: 'MODERATE', purinePerHg: 118, unit: 'g' },
+  { nameTh: 'เมล็ดทานตะวันอบ', nameEn: 'Roasted Sunflower Seeds', aliases: [], category: 'GRAINS', purineLevel: 'MODERATE', purinePerHg: 143, unit: 'g' },
+
+  // LOW PURINE (<50 mg)
+  { nameTh: 'ข้าวกล้อง', nameEn: 'Brown Rice', aliases: [], category: 'GRAINS', purineLevel: 'LOW', purinePerHg: 40, unit: 'g' },
+  { nameTh: 'พาสต้า', nameEn: 'Pasta', aliases: ['สปาเก็ตตี้', 'มักกะโรนี'], category: 'GRAINS', purineLevel: 'LOW', purinePerHg: 40, unit: 'g' },
+  { nameTh: 'ข้าวโพด', nameEn: 'Corn', aliases: [], category: 'VEGETABLES', purineLevel: 'LOW', purinePerHg: 52, unit: 'g' },
+  { nameTh: 'มันฝรั่ง', nameEn: 'Potato', aliases: [], category: 'VEGETABLES', purineLevel: 'LOW', purinePerHg: 16, unit: 'g' },
+  { nameTh: 'กะหล่ำปลี', nameEn: 'Cabbage', aliases: [], category: 'VEGETABLES', purineLevel: 'LOW', purinePerHg: 22, unit: 'g' },
+  { nameTh: 'แครอท', nameEn: 'Carrot', aliases: [], category: 'VEGETABLES', purineLevel: 'LOW', purinePerHg: 17, unit: 'g' }
 ]
 
 async function main() {
