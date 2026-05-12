@@ -111,11 +111,11 @@ export default function LandingPage() {
             {/* CTA Buttons */}
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
-                id="hero-cta-register"
-                href="/register"
+                id="hero-cta-calculator"
+                href="/calculator"
                 className="inline-flex items-center justify-center gap-2 rounded-lg gradient-brand text-white px-8 py-3 text-base font-semibold shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] transition-all duration-200"
               >
-                เริ่มต้นฟรี
+                คำนวณพิวรีน
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
