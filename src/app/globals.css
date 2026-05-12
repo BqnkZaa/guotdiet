@@ -1,26 +1,273 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================================
+   GOUT DIET PLATFORM — Design Token System
+   Palette: Health & Wellness (Green + Teal + White)
+   Mode: Light (default) + Dark
+   ============================================================================ */
 
 @theme inline {
+  /* ---- Typography ---- */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-inter);
+
+  /* ---- Color tokens (mapped from CSS custom properties) ---- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* ---- Purine Risk Colors ---- */
+  --color-purine-very-high: var(--purine-very-high);
+  --color-purine-high: var(--purine-high);
+  --color-purine-moderate: var(--purine-moderate);
+  --color-purine-low: var(--purine-low);
+
+  /* ---- Chart Colors ---- */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* ---- Sidebar ---- */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ---- Border Radius Scale ---- */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================================
+   LIGHT MODE TOKENS — Green/Teal health palette
+   ============================================================================ */
+:root {
+  /* Base */
+  --background: oklch(0.99 0.005 155);          /* near-white with faint green tint */
+  --foreground: oklch(0.16 0.02 200);           /* near-black teal */
+
+  /* Card */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.02 200);
+
+  /* Popover */
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.02 200);
+
+  /* Primary — Teal/Emerald green */
+  --primary: oklch(0.5 0.15 175);              /* vibrant teal-green */
+  --primary-foreground: oklch(0.99 0 0);
+
+  /* Secondary */
+  --secondary: oklch(0.95 0.02 155);           /* very light green tint */
+  --secondary-foreground: oklch(0.25 0.05 170);
+
+  /* Muted */
+  --muted: oklch(0.96 0.01 160);
+  --muted-foreground: oklch(0.5 0.03 175);
+
+  /* Accent — slightly warmer teal for hover states */
+  --accent: oklch(0.93 0.04 165);
+  --accent-foreground: oklch(0.2 0.06 175);
+
+  /* Destructive */
+  --destructive: oklch(0.577 0.245 27.325);
+
+  /* Border / Input / Ring */
+  --border: oklch(0.9 0.02 160);
+  --input: oklch(0.92 0.015 160);
+  --ring: oklch(0.55 0.13 175);
+
+  /* Border radius */
+  --radius: 0.625rem;
+
+  /* ---- Purine risk indicator colors ---- */
+  --purine-very-high: oklch(0.55 0.22 25);    /* red */
+  --purine-high: oklch(0.65 0.18 45);         /* orange */
+  --purine-moderate: oklch(0.72 0.16 80);     /* amber */
+  --purine-low: oklch(0.55 0.14 155);         /* green */
+
+  /* ---- Health Charts ---- */
+  --chart-1: oklch(0.5 0.15 175);             /* primary teal */
+  --chart-2: oklch(0.6 0.14 210);             /* blue-teal */
+  --chart-3: oklch(0.65 0.18 45);             /* amber */
+  --chart-4: oklch(0.55 0.22 25);             /* red */
+  --chart-5: oklch(0.62 0.12 280);            /* purple accent */
+
+  /* ---- Sidebar ---- */
+  --sidebar: oklch(0.97 0.015 160);
+  --sidebar-foreground: oklch(0.25 0.04 175);
+  --sidebar-primary: oklch(0.5 0.15 175);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.93 0.04 165);
+  --sidebar-accent-foreground: oklch(0.2 0.06 175);
+  --sidebar-border: oklch(0.9 0.02 160);
+  --sidebar-ring: oklch(0.55 0.13 175);
+}
+
+/* ============================================================================
+   DARK MODE TOKENS
+   ============================================================================ */
+.dark {
+  /* Base */
+  --background: oklch(0.14 0.02 200);          /* deep dark teal-grey */
+  --foreground: oklch(0.95 0.01 160);          /* off-white */
+
+  /* Card */
+  --card: oklch(0.18 0.025 195);
+  --card-foreground: oklch(0.95 0.01 160);
+
+  /* Popover */
+  --popover: oklch(0.18 0.025 195);
+  --popover-foreground: oklch(0.95 0.01 160);
+
+  /* Primary — lighter teal for dark bg */
+  --primary: oklch(0.6 0.14 175);
+  --primary-foreground: oklch(0.1 0.02 200);
+
+  /* Secondary */
+  --secondary: oklch(0.22 0.03 190);
+  --secondary-foreground: oklch(0.9 0.02 160);
+
+  /* Muted */
+  --muted: oklch(0.22 0.025 195);
+  --muted-foreground: oklch(0.62 0.04 175);
+
+  /* Accent */
+  --accent: oklch(0.25 0.035 185);
+  --accent-foreground: oklch(0.9 0.02 160);
+
+  /* Destructive */
+  --destructive: oklch(0.65 0.2 22);
+
+  /* Border / Input / Ring */
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.6 0.14 175);
+
+  /* ---- Purine risk colors (slightly brighter for dark mode) ---- */
+  --purine-very-high: oklch(0.65 0.22 25);
+  --purine-high: oklch(0.72 0.18 45);
+  --purine-moderate: oklch(0.78 0.16 80);
+  --purine-low: oklch(0.65 0.14 155);
+
+  /* ---- Charts ---- */
+  --chart-1: oklch(0.6 0.14 175);
+  --chart-2: oklch(0.65 0.13 210);
+  --chart-3: oklch(0.72 0.18 45);
+  --chart-4: oklch(0.65 0.22 25);
+  --chart-5: oklch(0.68 0.12 280);
+
+  /* ---- Sidebar ---- */
+  --sidebar: oklch(0.18 0.025 195);
+  --sidebar-foreground: oklch(0.9 0.02 160);
+  --sidebar-primary: oklch(0.6 0.14 175);
+  --sidebar-primary-foreground: oklch(0.1 0.02 200);
+  --sidebar-accent: oklch(0.25 0.035 185);
+  --sidebar-accent-foreground: oklch(0.9 0.02 160);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.6 0.14 175);
+}
+
+/* ============================================================================
+   BASE STYLES
+   ============================================================================ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans scroll-smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-screen;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================================
+   UTILITY CLASSES — Platform-specific
+   ============================================================================ */
+@layer utilities {
+  /* Gradient: primary brand gradient */
+  .gradient-brand {
+    background: linear-gradient(
+      135deg,
+      oklch(0.5 0.15 175) 0%,
+      oklch(0.45 0.14 200) 100%
+    );
+  }
+
+  /* Gradient: hero section background */
+  .gradient-hero {
+    background: linear-gradient(
+      160deg,
+      oklch(0.97 0.025 165) 0%,
+      oklch(0.94 0.04 200) 50%,
+      oklch(0.97 0.015 175) 100%
+    );
+  }
+
+  .dark .gradient-hero {
+    background: linear-gradient(
+      160deg,
+      oklch(0.16 0.03 185) 0%,
+      oklch(0.14 0.025 200) 50%,
+      oklch(0.15 0.02 175) 100%
+    );
+  }
+
+  /* Glass card effect */
+  .glass-card {
+    @apply backdrop-blur-sm border border-white/20;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .dark .glass-card {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Smooth transition for theme changes */
+  .theme-transition {
+    @apply transition-colors duration-200;
+  }
 }

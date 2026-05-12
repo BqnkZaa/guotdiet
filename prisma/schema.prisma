@@ -1,0 +1,64 @@
+// =============================================================================
+// Prisma Schema — Gout Diet Control Platform
+// =============================================================================
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// =============================================================================
+// DOMAIN MODELS
+// =============================================================================
+
+/// Food ingredient with purine content data
+model Food {
+  id          String      @id @default(cuid())
+  nameTh      String      // Thai name
+  nameEn      String      // English name
+  aliases     String[]    // Synonyms and common names
+  category    FoodCategory
+  purineLevel PurineLevel // classification
+  purinePerHg Float       // mg of purine per 100g
+  unit        String      @default("g") // serving unit
+  imageUrl    String?
+  source      String?     // data source reference
+  sourceUrl   String?     // Reference source link
+  medicalNotes String?    @db.Text // Specific medical/nutrition warnings
+  isVerified  Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([nameTh])
+  @@index([category])
+  @@map("foods")
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum FoodCategory {
+  MEAT        // เนื้อสัตว์
+  SEAFOOD     // อาหารทะเล
+  POULTRY     // สัตว์ปีก
+  ORGAN_MEAT  // เครื่องใน
+  LEGUMES     // ถั่ว
+  VEGETABLES  // ผัก
+  FRUITS      // ผลไม้
+  GRAINS      // ธัญพืช
+  DAIRY       // นม/ผลิตภัณฑ์นม
+  BEVERAGES   // เครื่องดื่ม
+  OTHER       // อื่นๆ
+}
+
+enum PurineLevel {
+  VERY_HIGH   // >300 mg/100g — avoid
+  HIGH        // 150–300 mg/100g — limit
+  MODERATE    // 50–150 mg/100g — caution
+  LOW         // <50 mg/100g — generally safe
+}

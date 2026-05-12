@@ -1,0 +1,4 @@
+{
+  "src": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "ignore": ["node_modules", ".next", "dist"]
+}
