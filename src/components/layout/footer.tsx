@@ -19,7 +19,7 @@ export function Footer() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {/* Brand column */}
           <div className="space-y-4 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 group w-fit">
@@ -40,21 +40,6 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Navigation column */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-foreground">การใช้งาน</h3>
-            <nav className="flex flex-col gap-2" aria-label="Footer navigation">
-              {footerNavItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors w-fit"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
 
           {/* Features column */}
           <div className="space-y-4">
