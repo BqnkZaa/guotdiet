@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 
 const mainNavItems = [
   { href: '/', label: 'หน้าแรก', icon: Home },
-  { href: '/calculator', label: 'เครื่องคิดเลข', icon: Calculator },
+  { href: '/calculator', label: 'เครื่องคิดพิวรีน', icon: Calculator },
   { href: '/foods', label: 'ฐานข้อมูลอาหาร', icon: Database },
 ]
 
