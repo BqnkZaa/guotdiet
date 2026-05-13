@@ -9,6 +9,8 @@ import {
   ChevronUp,
   Sparkles,
   Utensils,
+  Database,
+  Bot,
 } from 'lucide-react'
 import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
@@ -173,8 +175,33 @@ export function AiResultDisplay({ result }: AiResultDisplayProps) {
                 className="grid grid-cols-12 gap-2 px-6 py-3 items-center hover:bg-accent/5 animate-in fade-in slide-in-from-bottom-2 duration-300"
                 style={{ animationDelay: `${i * 60}ms`, animationFillMode: 'both' }}
               >
-                <div className="col-span-4 flex items-center gap-2">
-                  <span className="font-medium text-sm text-foreground leading-tight">{ing.name}</span>
+                <div className="col-span-4 flex flex-col gap-0.5">
+                  <div className="flex items-center gap-1.5">
+                    {/* Source badge: DB or AI */}
+                    {'fromDatabase' in ing && ing.fromDatabase ? (
+                      <span
+                        title={`จับคู่กับ: ${'matchedFoodName' in ing ? ing.matchedFoodName : ''}`}
+                        className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50 shrink-0"
+                      >
+                        <Database className="h-2.5 w-2.5" />
+                        DB
+                      </span>
+                    ) : (
+                      <span
+                        title="AI ประมาณค่า (ไม่พบในฐานข้อมูล)"
+                        className="inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400 border border-violet-200 dark:border-violet-900/50 shrink-0"
+                      >
+                        <Bot className="h-2.5 w-2.5" />
+                        AI
+                      </span>
+                    )}
+                    <span className="font-medium text-sm text-foreground leading-tight">{ing.name}</span>
+                  </div>
+                  {'fromDatabase' in ing && ing.fromDatabase && 'matchedFoodName' in ing && ing.matchedFoodName && ing.matchedFoodName !== ing.name && (
+                    <span className="text-[10px] text-muted-foreground/60 pl-0.5 truncate" title={ing.matchedFoodName}>
+                      → {ing.matchedFoodName}
+                    </span>
+                  )}
                 </div>
                 <span className="col-span-2 text-right text-sm text-muted-foreground">
                   {ing.estimatedGrams}g

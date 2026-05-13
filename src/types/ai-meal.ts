@@ -4,12 +4,20 @@ import { z } from 'zod'
 // Zod schemas for API validation & type inference
 // ============================================================
 
+// Schema for Step 1: ingredient extraction only (no purine values yet)
+export const AiExtractedIngredientSchema = z.object({
+  name: z.string(),
+  estimatedGrams: z.number(),
+})
+
 export const AiIngredientSchema = z.object({
   name: z.string(),
   estimatedGrams: z.number(),
   purinePerHg: z.number(),
   purineActual: z.number(),
   riskLevel: z.enum(['LOW', 'MODERATE', 'HIGH', 'VERY_HIGH']),
+  fromDatabase: z.boolean(),              // true = DB data, false = AI estimate
+  matchedFoodName: z.string().optional(), // Thai food name matched from DB
 })
 
 export const AiRecommendationSchema = z.object({
@@ -39,6 +47,7 @@ export const AiMealAnalysisSchema = z.object({
 // TypeScript types derived from schemas
 // ============================================================
 
+export type AiExtractedIngredient = z.infer<typeof AiExtractedIngredientSchema>
 export type AiIngredient = z.infer<typeof AiIngredientSchema>
 export type AiRecommendation = z.infer<typeof AiRecommendationSchema>
 export type AiAlternative = z.infer<typeof AiAlternativeSchema>
